@@ -13,6 +13,13 @@ SR_hs00.seurat$stim <- "hs00"
 SR_hs60.seurat <- CreateSeuratObject(counts = SR_hs60.data, project = "SR_hs")
 SR_hs60.seurat$stim <- "hs60"
 
+SR_hs00.seurat[["percent.mt"]] <- PercentageFeatureSet(heat_shock, pattern = "^MT-")
+SR_hs60.seurat[["percent.mt"]] <- PercentageFeatureSet(heat_shock, pattern = "^MT-")
+
+VlnPlot(SR_hs00.seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+
+VlnPlot(SR_hs60.seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+
 heat_shock <- merge(SR_hs00.seurat, y = SR_hs60.seurat, add.cell.ids = c("hs00", "hs60"), project = "heat_shock")
 
 heat_shock[["percent.mt"]] <- PercentageFeatureSet(heat_shock, pattern = "^MT-")
